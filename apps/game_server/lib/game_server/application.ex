@@ -5,12 +5,15 @@ defmodule GameServer.Application do
 
   use Application
 
-  alias GameServer.Store.Player
+  alias GameServer.Store.{Player, Boss}
 
   def start(_type, _args) do
     children = [
       GameServer.Repo,
-      {Player, %{}}
+      {Player, %{}},
+      {Boss, %{
+        health: 1000000000,
+      }}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: GameServer.Supervisor)
